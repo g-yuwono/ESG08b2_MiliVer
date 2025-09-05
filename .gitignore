@@ -1,0 +1,49 @@
+# ========================
+# General
+# ========================
+.DS_Store
+Thumbs.db
+
+# Python cache & build
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+.env/
+.env.*
+
+# ========================
+# Jupyter
+# ========================
+.ipynb_checkpoints/
+
+# ========================
+# Data & artifacts (managed by DVC, not Git)
+data/*
+artifacts/*
+reports/*
+
+# Keep placeholder files
+!data/.gitkeep
+!artifacts/.gitkeep
+!reports/.gitkeep
+
+# ========================
+# DVC & MLflow
+# ========================
+.cache/
+.dvc/tmp/
+mlruns/
+
+# ========================
+# Logs
+# ========================
+*.log
+*.out
+*.err
+slurm-*.out
