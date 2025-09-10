@@ -3,7 +3,8 @@
 ## Pull
 ```
 git clone https://github.com/MichaelChaoLi-cpu/MiliFrame-Template.git
-cd MiliFrame-Template
+mv MiliFrame-Template myproj
+cd myproj
 
 git remote rename origin upstream
 ```

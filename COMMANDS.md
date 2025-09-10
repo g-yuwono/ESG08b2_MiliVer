@@ -45,6 +45,10 @@ conda env export --from-history | grep -v "prefix:" > environment.yml
 
 # Export pip dependencies to requirements.txt
 pip freeze > requirements.txt
+
+# new conda env
+conda create -n myproj python=3.12 -y # suitable for tf 2.20
+pip install pandas==2.2.1 joblib==1.3.2 pyarrow==18.1.0 # open all parquet files
 ```
 
 ---
