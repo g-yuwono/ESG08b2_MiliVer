@@ -19,9 +19,14 @@ git commit -m "update environment"
 
 # Push changes to remote
 git push
+git push -u origin branch
 
 # Pull latest changes
 git pull
+git pull -u origin branch
+
+# build a new branch
+git checkout -b branch
 ```
 
 ---
@@ -83,4 +88,12 @@ dvc repro
 
 ```bash
 
+```
+
+## build pre-commit hook
+```bash
+pip install jupytext nbconvert nbformat
+pip install pre-commit
+pre-commit install
+## run once
 ```

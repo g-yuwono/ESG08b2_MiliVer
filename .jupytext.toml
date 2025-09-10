@@ -1,1 +1,11 @@
-# Placeholder for .jupytext.toml
+# Pair notebooks <-> scripts, mirroring folders
+formats = "notebooks//ipynb,nbs//py:percent"
+default_jupytext_formats = "ipynb,py:percent"
+
+# Keep notebooks lightweight
+cell_metadata_filter = "-all"
+notebook_metadata_filter = "-all"
+
+# (Optional) Ensure Python notebooks use .py percent format by default
+extension_mapping = { "ipynb" = "ipynb", "py" = "py" }
+

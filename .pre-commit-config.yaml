@@ -1,1 +1,14 @@
-# Placeholder for .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+        files: ^notebooks/.*\.ipynb$
+
+  - repo: https://github.com/mwouts/jupytext
+    rev: v1.17.3
+    hooks:
+      - id: jupytext
+        args: [--sync]         # same as your local hook
+        files: ^notebooks/.*\.ipynb$
+
