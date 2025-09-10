@@ -24,8 +24,12 @@ build/
 
 # ========================
 # Data & artifacts (managed by DVC, not Git)
-data/*
-artifacts/*
+data/**
+!data/**/*.dvc
+!data/**/.gitignore
+artifacts/**
+!artifacts/*.dvc
+!artifacts/**/*.dvc
 reports/*
 
 # Keep placeholder files

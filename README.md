@@ -14,6 +14,20 @@ git remote add origin git@github.com:<teammember-username>/project-stock-predict
 git push -u origin main
 ```
 
+## Run from scratch
+```
+conda create -n myproj python=3.x -y
+conda activate myproj
+
+pip install jupytext nbconvert nbformat
+pip install pre-commit
+pre-commit install
+
+pip install dvc
+dvc init
+```
+
+
 ## Run
 ```
 conda env create -f environment.yml
@@ -22,4 +36,6 @@ git init
 pre-commit install
 dvc init
 ```
+
+
 
