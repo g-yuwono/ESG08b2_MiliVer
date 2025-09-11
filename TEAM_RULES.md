@@ -23,6 +23,35 @@ myproj/
 └─ .gitignore
 ```
 
+```
+artifacts/runs/<exp_id>/
+├─ manifest.json            # Metadata snapshot (commit SHA, environment, dataset hashes)
+├─ params.snapshot.yaml     # Exact parameters used for this run
+├─ metrics.json             # Final key metrics
+├─ metrics_history.csv      # Training/evaluation metrics over time (per epoch/step)
+├─ data/                    # Data snapshot (small subset or DVC link, not full raw dataset)
+│  ├─ processed_sample.parquet
+│  └─ split_info.json
+├─ notebooks/               # Notebooks directly related to this run (exploration/preprocessing)
+│  ├─ prep_data_exp42.ipynb
+│  └─ analysis_exp42.ipynb
+├─ model/
+│  ├─ checkpoint.pt         # Main model checkpoint
+│  └─ tokenizer/            # Tokenizer or vocabulary files if applicable
+├─ logs/
+│  ├─ train.log             # Training console log
+│  ├─ errors.log            # Error/exception log
+│  └─ tb/                   # TensorBoard event files
+├─ plots/
+│  ├─ loss_curve.png        # Training/validation loss curve
+│  └─ confusion_matrix.png  # Example evaluation plot
+├─ predictions/
+│  └─ val_preds.parquet     # Validation predictions for analysis
+└─ reports/
+   └─ report.md             # Human-readable experiment report (goal, setup, results, insights)
+```
+
+
 ---
 
 ## 2) Golden Rules
@@ -30,8 +59,7 @@ myproj/
 1. **Code → Git**
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
-4. **Experiments → MLflow**
-5. **Heavy compute → HPC jobs**
+
 
 ---
 
@@ -39,11 +67,75 @@ myproj/
 
 - Commit paired `.py` files in `nbs/` for readable diffs; keep `notebooks/` outputs stripped via pre-commit.
 - Never commit raw datasets or large artifacts to Git.
-- Use branches for experiments (e.g., `exp-news-sentiment`, `exp-stock-lstm`); merge to `main` after validation.
-- Commit message style:
-  - `feat: add MODIS preprocessing`
-  - `exp: run LSTM for AAPL`
-  - `fix: correct date alignment`
+
+### Commit Standard
+#### Types:
+- `feat:` A new feature (e.g., new model, new module, new functionality).
+- `fix:` A bug fix (e.g., code error, wrong parameter, pipeline bug).
+- `docs:` Documentation changes only (README, docstrings, comments).
+- `style:` Code style changes (formatting, indentation, naming) without affecting logic.
+- `refactor:` Code refactoring that improves readability/structure but doesn’t change behavior.
+- `perf:` Performance improvements (e.g., faster training, memory optimization).
+- `test:` Adding or modifying tests.
+- `data:` Adding, updating, or cleaning datasets tracked via DVC.
+- `exp:` Experiment-related commits (e.g., new run config, changed hyperparameters).
+- `build:` Changes to environment setup, dependencies, or build scripts (e.g., environment.yml, Dockerfile).
+- `ci:` Changes to CI/CD configuration (e.g., GitHub Actions, pre-commit hooks).
+- `chore:` Other maintenance tasks that don’t affect source or data.
+- `revert:` Revert a previous commit.
+
+#### Scope
+Use to indicate the area affected, e.g.:
+model, data, pipeline, notebooks, nbs, docs, infra
+
+#### Summary
+Use imperative mood (e.g., “add” not “added” or “adds”).
+Keep it concise (≤ 72 characters).
+
+#### Example:
+```
+feat(model): add custom loss with MSE + regularization
+fix(pipeline): correct DVC stage for dataset merge
+docs: update README with DVC usage instructions
+data: add CMIP6 temperature dataset for 2000–2050
+exp: run Experiment 02 with new hyperparameter grid
+```
+
+
+### Core branches
+
+`main`     
+- stable, reproducible code + configs. Only “promoted” models land here.  
+
+`dev`    
+- integration of recent validated experiments. Can be ahead of main.
+
+Protect main (PR required, CI checks, no direct pushes). Keep dev lightly protected.
+
+### Work branches (short-lived, purpose-driven)
+
+Experiment: `exp/<id>-<topic>`
+- For trying ideas & tuning; may be messy.
+- Examples: exp/042-longer-context, exp/043-lr-warmup-10k
+
+Spike/Prototype: `spike/<topic>`
+- Throwaway exploration; benchmark feasibility; may never merge.
+- Example: spike/moe-routing
+
+Feature (productionize a win): `feature/<scope>-<desc>`
+- After an experiment proves value; tidy code, add tests/docs.
+- Example: feature/model-transformer-encoder
+
+Data Ops: `data/<dataset>-<change>`
+- Schema/ingest/cleaning tracked via DVC.
+- Example: data/modis-reproj-v1
+
+Hotfix: `hotfix/<issue>-<desc>`
+- Urgent fix off main.
+
+Rule of thumb
+- New idea? start spike/* → if promising, cut exp/* with proper tracking → once validated, promote via feature/* and merge to dev → release to main.
+
 
 ---
 
@@ -87,17 +179,31 @@ myproj/
 ## 6) Notebook Workflow
 
 - Keep **source** notebooks in `notebooks/` (outputs stripped by pre-commit + nbstripout).
-- To generate an **executed** notebook with outputs, use Papermill and save under `artifacts/runs/<timestamp_label>/`:
-  ```bash
-  run_id=$(date +"%Y-%m-%d_%H-%M")_train
-  outdir=artifacts/runs/$run_id
-  mkdir -p "$outdir"
-  papermill notebooks/00_example.ipynb "$outdir/00_example_executed.ipynb" -p params_file params.yaml
-  dvc add "$outdir"
-  git add "$outdir.dvc"
-  git commit -m "run: $run_id"
-  dvc push
-  ```
+
+- Code Requirement:    
+use relative address only, and in the begining of the notebook:
+```
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+os.chdir(os.getenv("PROJECT_ROOT"))
+```
+
+- Code Requirement:     
+Standard and third-party libraries first    
+Internal project imports afterwards      
+Absolute imports preferred over relative imports.   
+Within each section, sort imports alphabetically    
+Put a blank line in between each section  
+Separate “from  import ” from standard imports  
+Example:  
+```
+import numpy as np
+import os
+
+from my_project.utils import helper_function
+```
 
 ---
 
@@ -124,6 +230,19 @@ myproj/
 - Ensure job scripts exit non-zero on failure so pipelines (e.g., `dvc repro`) can detect errors.
 
 ---
+
+## 9) .env: Folder Address
+- All notebook should start from
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+os.chdir(os.getenv("PROJECT_ROOT"))
+```
+
+---
+
 
 ## 10) Environment Management
 

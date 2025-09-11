@@ -1,10 +1,11 @@
-# Placeholder for README.md
+# README (Before begin, please confirm that you have read and agreed with TEAM_RULE.md)
+
 
 ## Pull
 ```
 git clone https://github.com/MichaelChaoLi-cpu/MiliFrame-Template.git
-mv MiliFrame-Template myproj
-cd myproj
+mv MiliFrame-Template $myproj
+cd $myproj
 
 git remote rename origin upstream
 ```
@@ -25,6 +26,11 @@ pre-commit install
 
 pip install dvc
 dvc init
+```
+
+### If HPC
+```
+dvc remote add -d hpc /home/pj24001881/share/dvc_remote
 ```
 
 
