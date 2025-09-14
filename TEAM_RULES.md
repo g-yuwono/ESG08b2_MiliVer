@@ -59,7 +59,8 @@ artifacts/runs/<exp_id>/
 1. **Code → Git**
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
-
+4. Start an experiment: `./script/begin_experiment.sh ddd`        
+5. End an experiment: `./script/end_experiment.sh`     
 
 ---
 

@@ -61,6 +61,9 @@ chmod +x update_env.sh
 
 # Run environment update script
 ./update_env.sh
+
+chmod +x ./script/end_experiment.sh
+chmod +x ./script/begin_experiment.sh
 ```
 
 ---
@@ -101,3 +104,15 @@ pip install pre-commit
 pre-commit install
 ## run once
 ```
+
+
+## Notebook header
+All notebook should start from
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+os.chdir(os.getenv("PROJECT_ROOT"))
+```
+
