@@ -66,7 +66,17 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 info "Git work tree is clean."
 
-# ---------- 4) Append log ----------
+
+# ---------- 54) Switch back to dev ----------
+if git show-ref --verify --quiet refs/heads/dev; then
+  git checkout dev >/dev/null 2>&1 && info "Switched back to branch: dev" || err "Failed to checkout dev branch."
+else
+  err "Branch 'dev' does not exist."
+fi
+
+echo "[SUCCESS] Experiment ${EXP_ID} closed."
+
+# ---------- 45) Append log ----------
 # Extract Aim and Date (first non-empty line after headings)
 AIM_LINE=$(grep -n '^##[[:space:]]\+Aim[[:space:]]*$' "$REPORT_FILE" | awk -F: 'NR==1{print $1}')
 DATE_LINE=$(grep -n '^##[[:space:]]\+Date[[:space:]]*$' "$REPORT_FILE" | awk -F: 'NR==1{print $1}')
@@ -98,12 +108,3 @@ fi
 
 echo "" > "$EXP_FILE"
 info "Experiment ${EXP_ID} logged to ${LOG_FILE} and .exp_online cleared."
-
-# ---------- 5) Switch back to dev ----------
-if git show-ref --verify --quiet refs/heads/dev; then
-  git checkout dev >/dev/null 2>&1 && info "Switched back to branch: dev" || err "Failed to checkout dev branch."
-else
-  err "Branch 'dev' does not exist."
-fi
-
-echo "[SUCCESS] Experiment ${EXP_ID} closed."
