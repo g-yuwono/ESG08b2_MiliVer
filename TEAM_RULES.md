@@ -59,6 +59,8 @@ artifacts/runs/<exp_id>/
 1. **Code → Git**
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
+4. Start an experiment: `./script/begin_experiment.sh ddd`
+5. End an experiment: `./script/end_experiment.sh`
 
 
 ---
@@ -104,10 +106,10 @@ exp: run Experiment 02 with new hyperparameter grid
 
 ### Core branches
 
-`main`     
-- stable, reproducible code + configs. Only “promoted” models land here.  
+`main`
+- stable, reproducible code + configs. Only “promoted” models land here.
 
-`dev`    
+`dev`
 - integration of recent validated experiments. Can be ahead of main.
 
 Protect main (PR required, CI checks, no direct pushes). Keep dev lightly protected.
@@ -180,7 +182,7 @@ Rule of thumb
 
 - Keep **source** notebooks in `notebooks/` (outputs stripped by pre-commit + nbstripout).
 
-- Code Requirement:    
+- Code Requirement:
 use relative address only, and in the begining of the notebook:
 ```
 import os
@@ -190,14 +192,14 @@ load_dotenv()
 os.chdir(os.getenv("PROJECT_ROOT"))
 ```
 
-- Code Requirement:     
-Standard and third-party libraries first    
-Internal project imports afterwards      
-Absolute imports preferred over relative imports.   
-Within each section, sort imports alphabetically    
-Put a blank line in between each section  
-Separate “from  import ” from standard imports  
-Example:  
+- Code Requirement:
+Standard and third-party libraries first
+Internal project imports afterwards
+Absolute imports preferred over relative imports.
+Within each section, sort imports alphabetically
+Put a blank line in between each section
+Separate “from  import ” from standard imports
+Example:
 ```
 import numpy as np
 import os

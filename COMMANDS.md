@@ -1,6 +1,6 @@
 # Common Commands Handbook
 
-This file collects frequently used commands for Git, DVC, Conda, and HPC.  
+This file collects frequently used commands for Git, DVC, Conda, and HPC.
 Team members can extend it as needed.
 
 ---
@@ -19,14 +19,9 @@ git commit -m "update environment"
 
 # Push changes to remote
 git push
-git push -u origin branch
 
 # Pull latest changes
 git pull
-git pull -u origin branch
-
-# build a new branch
-git checkout -b branch
 ```
 
 ---
@@ -45,10 +40,6 @@ conda env export --from-history | grep -v "prefix:" > environment.yml
 
 # Export pip dependencies to requirements.txt
 pip freeze > requirements.txt
-
-# new conda env
-conda create -n myproj python=3.12 -y # suitable for tf 2.20
-pip install pandas==2.2.1 joblib==1.3.2 pyarrow==18.1.0 # open all parquet files
 ```
 
 ---
@@ -61,6 +52,13 @@ chmod +x update_env.sh
 
 # Run environment update script
 ./update_env.sh
+
+chmod +x ./script/end_experiment.sh
+chmod +x ./script/begin_experiment.sh
+
+# Run for a new experiment
+./script/end_experiment.sh 001
+./script/begin_experiment.sh
 ```
 
 ---
@@ -92,12 +90,4 @@ dvc repro
 
 ```bash
 
-```
-
-## build pre-commit hook
-```bash
-pip install jupytext nbconvert nbformat
-pip install pre-commit
-pre-commit install
-## run once
 ```
