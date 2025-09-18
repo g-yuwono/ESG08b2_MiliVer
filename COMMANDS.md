@@ -5,41 +5,62 @@ Team members can extend it as needed.
 
 ---
 
-## 🔹 Git
 
-```bash
-# Check current status
-git status
+## Pull from Mike's Github to build a new project
+setting your project name
+```
+export myproj YOUR_PROJECT_NAME
+```
 
-# Stage specific files
-git add environment.yml requirements.txt
+pull the repo
+```
+git clone https://github.com/MichaelChaoLi-cpu/MiliFrame-Template.git
+mv MiliFrame-Template $myproj
+cd $myproj
 
-# Commit with message
-git commit -m "update environment"
+git remote rename origin upstream
+```
 
-# Push changes to remote
-git push
-
-# Pull latest changes
-git pull
+link this folder to your repo
+```
+git remote add origin REPO_ADD_in_GITHUB.git
+git push -u origin main
 ```
 
 ---
 
-## 🔹 Conda & Environment
+## Run from scratch to build a new project
+```
+conda create -n $myproj python=3.x -y ## please change to the correct version 3.x could be a version like 3.9 0r 3.12
+conda activate $myproj ## it is recommended that use you project as the env name
 
-```bash
-# Create environment from environment.yml
+pip install jupytext nbconvert nbformat
+pip install pre-commit
+pre-commit install
+
+pip install dvc
+dvc init
+```
+
+### If HPC or Local
+HPC
+```
+dvc remote add -d hpc /home/pj24001881/share/dvc_remote
+```
+
+Local
+```
+dvc remote add -d ANYTHING YOUR/DATA/LOCATION(Another Folder)
+```
+
+
+## Run 
+```
 conda env create -f environment.yml
-
-# Activate environment
-conda activate myproj
-
-# Export environment to environment.yml
-conda env export --from-history | grep -v "prefix:" > environment.yml
-
-# Export pip dependencies to requirements.txt
-pip freeze > requirements.txt
+conda activate $myproj
+git init
+pre-commit install
+dvc init
 ```
 
 ---

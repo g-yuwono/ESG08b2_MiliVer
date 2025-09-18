@@ -15,6 +15,7 @@ myproj/
 ├─ data/              # Datasets (tracked by DVC, ignored by Git)
 ├─ artifacts/runs/    # Executed notebooks & run outputs (tracked by DVC)
 ├─ reports/           # Metrics/plots (tracked by DVC)
+├─ scripts/           # Necessary Executable .sh       
 ├─ params.yaml        # Centralized parameters for experiments
 ├─ dvc.yaml           # Pipeline definition
 ├─ environment.yml    # Conda environment definition
