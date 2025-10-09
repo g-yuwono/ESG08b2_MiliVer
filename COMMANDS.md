@@ -74,8 +74,8 @@ chmod +x update_env.sh
 # Run environment update script
 ./update_env.sh
 
-chmod +x ./script/end_experiment.sh
-chmod +x ./script/begin_experiment.sh
+chmod +x ./scripts/end_experiment.sh
+chmod +x ./scripts/begin_experiment.sh
 
 # Run for a new experiment
 ./script/end_experiment.sh 001
