@@ -9,7 +9,10 @@
 set -e
 
 # Name of conda environment (edit if different)
-ENV_NAME="myproj"
+ENV_NAME="ESG08b2_MiliVer_Refactor"
+
+echo ">>> Initializing Conda for the script"
+source $(conda info --base)/etc/profile.d/conda.sh
 
 echo ">>> Activating conda environment: $ENV_NAME"
 conda activate $ENV_NAME
