@@ -67,13 +67,16 @@ dvc init
 
 ## 🔹 Scripts
 
+For updating the python env-related documents
 ```bash
 # Make update_env.sh executable
 chmod +x update_env.sh
 
 # Run environment update script
 ./update_env.sh
-
+```
+For building experiments
+```bash
 chmod +x ./script/end_experiment.sh
 chmod +x ./script/begin_experiment.sh
 
