@@ -256,9 +256,7 @@ os.chdir(os.getenv("PROJECT_ROOT"))
   ```
 - After changing dependencies:
   ```bash
-  conda env export --from-history > environment.yml
-  pip freeze > requirements.txt
-  git commit -am "update environment"
+  ./update_env.sh 
   ```
 
 ---
