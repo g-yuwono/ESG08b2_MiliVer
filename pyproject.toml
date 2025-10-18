@@ -1,0 +1,9 @@
+[project]
+name = "mproj"
+version = "0.0.0"
+description = "My project description"
+dependencies = []
+
+authors = [
+  { name = "Mike C. Li", email = "c.li[at]aiesg.com" }
+]
