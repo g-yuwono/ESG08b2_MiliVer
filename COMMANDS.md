@@ -40,6 +40,8 @@ pre-commit install
 
 pip install dvc
 dvc init
+
+uv sync
 ```
 
 ### If HPC or Local
@@ -67,14 +69,6 @@ dvc init
 
 ## 🔹 Scripts
 
-For updating the python env-related documents
-```bash
-# Make update_env.sh executable
-chmod +x update_env.sh
-
-# Run environment update script
-./update_env.sh
-```
 For building experiments
 ```bash
 chmod +x ./scripts/end_experiment.sh

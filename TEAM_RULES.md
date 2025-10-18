@@ -21,7 +21,6 @@ myproj/
 ├─ experiment_log.md  # Records of experiments       
 ├─ params.yaml        # Centralized parameters for experiments
 ├─ dvc.yaml           # Pipeline definition
-├─ environment.yml    # Conda environment definition
 ├─ .jupytext.toml     # Pairing config for ipynb/py
 ├─ .pre-commit-config.yaml        
 ├─ .env               # Record env variables         
@@ -82,7 +81,8 @@ The version number must be updated whenever any action file is modified to refle
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
 4. Start an experiment: `./script/begin_experiment.sh ddd`
-5. End an experiment: `./script/end_experiment.sh`
+5. End an experiment: `./script/end_experiment.sh`        
+6. `uv add` and `uv remove`
 
 ---
 
@@ -274,10 +274,13 @@ os.chdir(os.getenv("PROJECT_ROOT"))
   conda env create -f environment.yml
   conda activate myproj
   ```
-- After changing dependencies:
-  ```bash
-  ./scripts/update_env.sh   ### chmod +x ./scripts/update_env.sh before you execute
-  ```
+
+- UV add and remove package
+```bash
+pip install uv
+uv add numpy # install
+uv remove numpy #uninstall
+```
 
 ---
 
