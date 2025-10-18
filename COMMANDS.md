@@ -77,12 +77,12 @@ chmod +x update_env.sh
 ```
 For building experiments
 ```bash
-chmod +x ./script/end_experiment.sh
-chmod +x ./script/begin_experiment.sh
+chmod +x ./scripts/end_experiment.sh
+chmod +x ./scripts/begin_experiment.sh
 
 # Run for a new experiment
-./script/end_experiment.sh 001
-./script/begin_experiment.sh
+./scripts/end_experiment.sh
+./scripts/begin_experiment.sh 001
 ```
 
 ---

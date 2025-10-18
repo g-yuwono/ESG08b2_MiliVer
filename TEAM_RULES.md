@@ -16,11 +16,16 @@ myproj/
 ├─ artifacts/runs/    # Executed notebooks & run outputs (tracked by DVC)
 ├─ reports/           # Metrics/plots (tracked by DVC)
 ├─ scripts/           # Necessary Executable .sh       
+├─ actionplan/        # Task plan abortion diagram and corresponding instructions, named by the planned version number. e.g. v0.0.0.md       
+├─ README.md          # README file       
+├─ experiment_log.md  # Records of experiments       
 ├─ params.yaml        # Centralized parameters for experiments
 ├─ dvc.yaml           # Pipeline definition
 ├─ environment.yml    # Conda environment definition
 ├─ .jupytext.toml     # Pairing config for ipynb/py
-├─ .pre-commit-config.yaml
+├─ .pre-commit-config.yaml        
+├─ .env               # Record env variables         
+├─ .exp_online        # Record experience code                   
 └─ .gitignore
 ```
 
@@ -52,10 +57,26 @@ artifacts/runs/<exp_id>/
    └─ report.md             # Human-readable experiment report (goal, setup, results, insights)
 ```
 
+---
+## 2) Project Initialization Rules
+-	1.	**Clear Planning Before Launch**         
+A project should only be initiated once a reasonably clear action plan has been developed and a corresponding workflow diagram has been created.        
+-	2.	**Workflow-Based Experimentation**           
+All experiments and feature development should be structured according to the workflow diagram, ensuring logical segmentation and traceability.
+-	3.	**Experiment and Feature Logging**           
+The detailed process of experiments, feature implementations, and incremental progress should be documented in experiment_log.md.
+For ongoing project management, the same updates should also be recorded in the backlog or Notion workspace.         
+-	4.	**Versioning Scheme: major.minor.patch**          
+	•	Major – Changes that affect the entire workflow and invalidate or alter previously completed downstream components.         
+	•	Minor – Changes that affect the entire workflow but only impact upcoming components (e.g., introducing new features).       
+	•	Patch – Incremental improvements or refinements within the current workflow segment.         
+Version updates must follow this convention strictly.          
+-	5.	**Version Update Requirement**          
+The version number must be updated whenever any action file is modified to reflect the current state of the project.       
 
 ---
 
-## 2) Golden Rules
+## 3) Golden Rules
 
 1. **Code → Git**
 2. **Data/Outputs → DVC**
@@ -63,10 +84,9 @@ artifacts/runs/<exp_id>/
 4. Start an experiment: `./script/begin_experiment.sh ddd`
 5. End an experiment: `./script/end_experiment.sh`
 
-
 ---
 
-## 3) Git Practices
+## 4) Git Practices
 
 - Commit paired `.py` files in `nbs/` for readable diffs; keep `notebooks/` outputs stripped via pre-commit.
 - Never commit raw datasets or large artifacts to Git.
@@ -142,7 +162,7 @@ Rule of thumb
 
 ---
 
-## 4) DVC Practices
+## 5) DVC Practices
 
 - Track large files and executed notebooks with DVC:
   ```bash
@@ -161,7 +181,7 @@ Rule of thumb
 
 ---
 
-## 5) HPC Remote Storage
+## 6) HPC Remote Storage
 
 - Default DVC remote (edit to your real path):
   ```
@@ -179,7 +199,7 @@ Rule of thumb
 
 ---
 
-## 6) Notebook Workflow
+## 7) Notebook Workflow
 
 - Keep **source** notebooks in `notebooks/` (outputs stripped by pre-commit + nbstripout).
 
@@ -210,7 +230,7 @@ from my_project.utils import helper_function
 
 ---
 
-## 7) Experiment Tracking
+## 8) Experiment Tracking
 
 - Centralize parameters in `params.yaml` and reference them in notebooks.
 - Use MLflow to log metrics, params, and artifacts. Always tag the Git commit and (if applicable) the DVC data version.
@@ -218,7 +238,7 @@ from my_project.utils import helper_function
 
 ---
 
-## 8) Collaboration Rhythm
+## 9) Collaboration Rhythm
 
 - **Start of day / machine switch**: `git pull && dvc pull`
 - **End of session**: `git push && dvc push`
@@ -227,14 +247,14 @@ from my_project.utils import helper_function
 
 ---
 
-## 9) HPC Jobs (SLURM or similar)
+## 10) HPC Jobs (SLURM or similar)
 
 - Submit heavy compute via the scheduler; write outputs (logs, metrics, executed notebooks) to a unique `artifacts/runs/<timestamp_label>/`.
 - Ensure job scripts exit non-zero on failure so pipelines (e.g., `dvc repro`) can detect errors.
 
 ---
 
-## 9) .env: Folder Address
+## 10) .env: Folder Address
 - All notebook should start from
 ```python
 import os
@@ -247,7 +267,7 @@ os.chdir(os.getenv("PROJECT_ROOT"))
 ---
 
 
-## 10) Environment Management
+## 11) Environment Management
 
 - Create environment:
   ```bash
@@ -256,21 +276,20 @@ os.chdir(os.getenv("PROJECT_ROOT"))
   ```
 - After changing dependencies:
   ```bash
-  conda env export --from-history > environment.yml
-  pip freeze > requirements.txt
-  git commit -am "update environment"
+  ./scripts/update_env.sh   ### chmod +x ./scripts/update_env.sh before you execute
   ```
 
 ---
 
-## 11) Security & Secrets
+## 12) Security & Secrets
 
 - Never commit credentials. Use `.env` + a secret manager or HPC-provided key vaults.
 - Keep access to `/lustre/share/<your-group>/dvcstore` group-restricted.
 
 ---
 
-## 12) Ownership & Maintenance
+## 13) Ownership & Maintenance
 
 - The repo owner maintains `main` branch protection, pre-commit config, and DVC remote configuration.
 - Each experiment owner documents key runs under `reports/` and ensures `dvc push` is complete.
+              
