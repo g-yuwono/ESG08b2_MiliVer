@@ -19,8 +19,8 @@ exp data folder is recommended to remove. exp dvc only keep the notebooks and re
 ```
 myproj/
 ├─ notebooks/         # Source .ipynb (outputs stripped, clean for Git)
+├─ test_notebooks/    # Test for notebooks .ipynb (does not clean by hook but control by dvc)
 ├─ nbs/               # Paired .py (percent format, for Git diff/review)
-├─ src/               # Reusable Python modules
 ├─ data/              # Datasets (tracked by DVC, ignored by Git)
 ├─ artifacts/runs/    # Executed notebooks & run outputs (tracked by DVC)
 ├─ reports/           # Metrics/plots (tracked by DVC)
