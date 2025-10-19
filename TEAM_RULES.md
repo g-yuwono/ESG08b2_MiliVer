@@ -5,6 +5,15 @@ It ensures **reproducibility**, **clarity**, and **efficient collaboration** acr
 
 ---
 
+## 0) Principles
+- 1. Data-centric system            
+The code, file structure, and documentation are all centered around making data generation reproducible. The core is the data and its related descriptions.         
+- 2. exp for feasibility, dev for readability         
+The exp branch tests feasibility, and the dev branch refactors to ensure code and document readability.         
+exp data folder is recommended to remove. exp dvc only keep the notebooks and records.        
+
+---
+
 ## 1) Repository Structure
 
 ```
@@ -254,7 +263,7 @@ from my_project.utils import helper_function
 
 ---
 
-## 10) .env: Folder Address
+## 11) .env: Folder Address
 - All notebook should start from
 ```python
 import os
@@ -267,7 +276,7 @@ os.chdir(os.getenv("PROJECT_ROOT"))
 ---
 
 
-## 11) Environment Management
+## 12) Environment Management
 
 - Create environment:
   ```bash
@@ -284,14 +293,14 @@ uv remove numpy #uninstall
 
 ---
 
-## 12) Security & Secrets
+## 13) Security & Secrets
 
 - Never commit credentials. Use `.env` + a secret manager or HPC-provided key vaults.
 - Keep access to `/lustre/share/<your-group>/dvcstore` group-restricted.
 
 ---
 
-## 13) Ownership & Maintenance
+## 14) Ownership & Maintenance
 
 - The repo owner maintains `main` branch protection, pre-commit config, and DVC remote configuration.
 - Each experiment owner documents key runs under `reports/` and ensures `dvc push` is complete.
