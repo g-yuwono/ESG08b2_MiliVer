@@ -30,6 +30,9 @@ data/**
 artifacts/**
 !artifacts/*.dvc
 !artifacts/**/*.dvc
+test_notebooks/**
+!test_notebooks/*.dvc
+!test_notebooks/**/*.dvc
 reports/*
 
 # Keep placeholder files
