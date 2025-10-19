@@ -10,7 +10,9 @@ It ensures **reproducibility**, **clarity**, and **efficient collaboration** acr
 The code, file structure, and documentation are all centered around making data generation reproducible. The core is the data and its related descriptions.         
 - 2. exp for feasibility, dev for readability         
 The exp branch tests feasibility, and the dev branch refactors to ensure code and document readability.         
-exp data folder is recommended to remove. exp dvc only keep the notebooks and records.        
+exp data folder is recommended to remove. exp dvc only keep the notebooks and records.         
+- 3. test is for data       
+The test should only focus on the data shape, and some necessary vaisualizations. The records should be keep in the corresponding .ipynb for review.                     
 
 ---
 
