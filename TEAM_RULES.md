@@ -13,6 +13,8 @@ The exp branch tests feasibility, and the dev branch refactors to ensure code an
 exp data folder is recommended to remove. exp dvc only keep the notebooks and records.         
 - 3. test is for data       
 The test should only focus on the data shape, and some necessary vaisualizations. The records should be keep in the corresponding .ipynb for review.                     
+- 4. Reuse, not redefine          
+If a function could be resued, then move it to a module and reuse, rather than redifine.          
 
 ---
 
