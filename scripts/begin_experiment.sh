@@ -36,6 +36,7 @@ fi
 
 # 2. Create experiment folder structure
 mkdir -p "${BASE_DIR}/notebooks" \
+         "${BASE_DIR}/nbs" \
          "${BASE_DIR}/data/processed" \
          "${BASE_DIR}/logs" \
          "${BASE_DIR}/models" \
