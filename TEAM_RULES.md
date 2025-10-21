@@ -93,9 +93,10 @@ The version number must be updated whenever any action file is modified to refle
 1. **Code → Git**
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
-4. Start an experiment: `./script/begin_experiment.sh ddd`
-5. End an experiment: `./script/end_experiment.sh`        
-6. `uv add` and `uv remove`
+4. Start an experiment: `./scripts/begin_experiment.sh ddd`
+5. End an experiment: `./scripts/end_experiment.sh`        
+6. Upload code in runs_ddd `./scripts/clean_experiment_code.sh`
+7. `uv add` and `uv remove`
 
 ---
 
