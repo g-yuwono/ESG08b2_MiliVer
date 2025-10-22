@@ -30,6 +30,16 @@ data/**
 artifacts/**
 !artifacts/*.dvc
 !artifacts/**/*.dvc
+
+!artifacts/
+!artifacts/runs_*/
+!artifacts/runs_*/nbs/
+!artifacts/runs_*/nbs/**
+!artifacts/runs_*/nbs/**/*.py
+
+test_notebooks/**
+!test_notebooks/*.dvc
+!test_notebooks/**/*.dvc
 reports/*
 
 # Keep placeholder files

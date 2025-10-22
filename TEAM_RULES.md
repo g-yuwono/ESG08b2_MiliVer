@@ -10,7 +10,11 @@ It ensures **reproducibility**, **clarity**, and **efficient collaboration** acr
 The code, file structure, and documentation are all centered around making data generation reproducible. The core is the data and its related descriptions.         
 - 2. exp for feasibility, dev for readability         
 The exp branch tests feasibility, and the dev branch refactors to ensure code and document readability.         
-exp data folder is recommended to remove. exp dvc only keep the notebooks and records.        
+exp data folder is recommended to remove. exp dvc only keep the notebooks and records.         
+- 3. test is for data       
+The test should only focus on the data shape, and some necessary vaisualizations. The records should be keep in the corresponding .ipynb for review.                     
+- 4. Reuse, not redefine          
+If a function could be resued, then move it to a module and reuse, rather than redifine.          
 
 ---
 
@@ -19,8 +23,8 @@ exp data folder is recommended to remove. exp dvc only keep the notebooks and re
 ```
 myproj/
 ├─ notebooks/         # Source .ipynb (outputs stripped, clean for Git)
+├─ test_notebooks/    # Test for notebooks .ipynb (does not clean by hook but control by dvc)
 ├─ nbs/               # Paired .py (percent format, for Git diff/review)
-├─ src/               # Reusable Python modules
 ├─ data/              # Datasets (tracked by DVC, ignored by Git)
 ├─ artifacts/runs/    # Executed notebooks & run outputs (tracked by DVC)
 ├─ reports/           # Metrics/plots (tracked by DVC)
@@ -89,9 +93,10 @@ The version number must be updated whenever any action file is modified to refle
 1. **Code → Git**
 2. **Data/Outputs → DVC**
 3. **Parameters → `params.yaml`**
-4. Start an experiment: `./script/begin_experiment.sh ddd`
-5. End an experiment: `./script/end_experiment.sh`        
-6. `uv add` and `uv remove`
+4. Start an experiment: `./scripts/begin_experiment.sh ddd`
+5. End an experiment: `./scripts/end_experiment.sh`        
+6. Upload code in runs_ddd `./scripts/clean_experiment_code.sh`
+7. `uv add` and `uv remove`
 
 ---
 
